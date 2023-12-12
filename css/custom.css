@@ -11,29 +11,59 @@ body {
   justify-content: flex-end; /* 要素を下部に揃える */
 }
 .title {
-  align-self: center;
-  width: fit-content;
+  position: absolute;
+  left: 50%;
+  top: 0%;
+  transform: translate(-50%);
+  white-space: nowrap;
+}
+.title h3 {
+  font-size: 25px;
 }
 .flex-area {
-  display: flex;
-  justify-content: space-between;
+  position: relative; /* 相対的な位置を基準にするために親要素に対してposition: relative; を指定 */
 }
 .sound {
   margin: 8px 16px 0 0;
   text-align: right;
 }
 
-.sound img {
+.sound a img {
   width: 100%;
   overflow: hidden; /* 画像がボーダーをはみ出さないようにする */
   padding: 8px;
 }
-.border-area {
+.border-area a {
   display: flex;
   margin: 0 0 0 auto;
   width: 48px;
   border-radius: 50%; /* 丸いボーダーの半径を50%に設定 */
   border: 2px solid #3498db; /* ボーダーの太さと色を設定 */
+}
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+/* ドロップダウンメニューの初期非表示スタイル */
+.dropdown-content {
+  display: none;
+
+  background-color: #121212;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+.dropdown-content a {
+  color: #ffd700;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #1c1c1c;
+}
+.show {
+  display: block;
 }
 .wallimg {
   margin-top: 270px;
