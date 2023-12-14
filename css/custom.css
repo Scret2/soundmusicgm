@@ -6,7 +6,8 @@ body {
   height: 100%;
   margin: 0px;
   padding: 0;
-  background-color: rgb(53, 54, 59);
+  /* background-color: rgb(53, 54, 59); */
+  background-color: #fff3b8;
   min-height: 100vh; /* 画面全体の高さを最小100%に設定 */
   justify-content: flex-end; /* 要素を下部に揃える */
 }
@@ -19,6 +20,7 @@ body {
 }
 .title h3 {
   font-size: 25px;
+  color: #0c92b7;
 }
 .flex-area {
   position: relative; /* 相対的な位置を基準にするために親要素に対してposition: relative; を指定 */
@@ -47,8 +49,7 @@ body {
 /* ドロップダウンメニューの初期非表示スタイル */
 .dropdown-content {
   display: none;
-
-  background-color: #121212;
+  background-color: rgb(255, 241, 165);
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
@@ -57,10 +58,11 @@ body {
   padding: 12px 16px;
   text-decoration: none;
   display: block;
+  border-bottom: 1px solid whitesmoke;
 }
 
 .dropdown-content a:hover {
-  background-color: #1c1c1c;
+  background-color: rgb(245, 234, 171);
 }
 .show {
   display: block;
