@@ -8,6 +8,10 @@ let snd3 = null;
 let snd4 = null;
 let snd5 = null;
 let soundicon = $("#soundicon");
+const controlArea = $("#controlarea");
+const stopImageSrc = "images/stopicon.png";
+const playImageSrc = "images/playicon.png";
+let isMusicPlaying = false;
 let dropdownContent = $("#dropdownContent");
 
 const sounds = [
@@ -27,6 +31,27 @@ for (let i = 0; i < sounds.length; i++) {
     loop: true,
     volume: 1.0,
     autoplay: false,
+    onplay: function () {
+      // ミュージック再生時に画像を変更
+      $("#wallImage").attr("src", "images/hosino-unscreen.gif");
+      isMusicPlaying = true;
+      controlArea.html(`<img src="${stopImageSrc}" id="stopMusic" />`);
+      this.isPlaying = true; // 現在再生中のフラグを更新
+    },
+    onpause: function () {
+      // ミュージック一時停止時に画像を元に戻す
+      $("#wallImage").attr("src", "images/blue archive.png");
+      isMusicPlaying = false;
+      controlArea.html(`<img src="${playImageSrc}" id="playMusic" />`);
+      this.isPlaying = false; // 現在再生中のフラグを更新
+    },
+    onstop: function () {
+      // ミュージック停止時に画像を元に戻す
+      $("#wallImage").attr("src", "images/blue archive.png");
+      isMusicPlaying = false;
+      controlArea.html(`<img src="${playImageSrc}" id="playMusic" />`); // ミュージック停止時に画像を削除
+      this.isPlaying = false; // 現在再生中のフラグを更新
+    },
   });
 
   $(`#music${i + 1}`).click(() => {
@@ -43,6 +68,23 @@ for (let i = 0; i < sounds.length; i++) {
     }
   });
 }
+controlArea.on("click", "#stopMusic", function () {
+  for (let i = 0; i < howls.length; i++) {
+    if (howls[i].playing()) {
+      howls[i].stop();
+    }
+  }
+});
+
+// controlArea.on("click", "#playMusic", function () {
+//   for (let i = 0; i < howls.length; i++) {
+//     if (howls[i].playing()) {
+//       howls[i].pause();
+//     } else {
+//       howls[i].play();
+//     }
+//   }
+// });
 
 // Ready
 $(document).ready(() => {
