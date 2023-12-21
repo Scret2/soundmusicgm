@@ -9,8 +9,10 @@ let snd4 = null;
 let snd5 = null;
 let soundicon = $("#soundicon");
 const controlArea = $("#controlarea");
+const controlWave = $("#musicwave");
 const stopImageSrc = "images/stopicon.png";
 const playImageSrc = "images/playicon.png";
+const playMusicWave = "images/musicwave.gif";
 let isMusicPlaying = false;
 let dropdownContent = $("#dropdownContent");
 
@@ -35,8 +37,11 @@ for (let i = 0; i < sounds.length; i++) {
       // ミュージック再生時に画像を変更
       $("#wallImage").attr("src", "images/hosino-unscreen.gif");
       isMusicPlaying = true;
+      controlWave.html(`<img src="${playMusicWave}" id="playMusicWave" />`);
       controlArea.html(`<img src="${stopImageSrc}" id="stopMusic" />`);
       this.isPlaying = true; // 現在再生中のフラグを更新
+      // $("#musicwave").css("display", "initial");
+      $("#musicwave").css("opacity", "1");
     },
     onpause: function () {
       // ミュージック一時停止時に画像を元に戻す
@@ -44,6 +49,8 @@ for (let i = 0; i < sounds.length; i++) {
       isMusicPlaying = false;
       controlArea.html(`<img src="${playImageSrc}" id="playMusic" />`);
       this.isPlaying = false; // 現在再生中のフラグを更新
+      // $("#musicwave").css("display", "none");
+      $("#musicwave").css("opacity", "0");
     },
     onstop: function () {
       // ミュージック停止時に画像を元に戻す
@@ -51,6 +58,8 @@ for (let i = 0; i < sounds.length; i++) {
       isMusicPlaying = false;
       controlArea.html(`<img src="${playImageSrc}" id="playMusic" />`); // ミュージック停止時に画像を削除
       this.isPlaying = false; // 現在再生中のフラグを更新
+      // $("#musicwave").css("display", "none");
+      $("#musicwave").css("opacity", "0");
     },
   });
 
@@ -75,16 +84,13 @@ controlArea.on("click", "#stopMusic", function () {
     }
   }
 });
-
-// controlArea.on("click", "#playMusic", function () {
-//   for (let i = 0; i < howls.length; i++) {
-//     if (howls[i].playing()) {
-//       howls[i].pause();
-//     } else {
-//       howls[i].play();
-//     }
-//   }
-// });
+controlArea.on("click", "#playMusic", function () {
+  for (let i = 0; i < howls.length; i++) {
+    if (howls[i].playing()) {
+      howls[i].pause();
+    }
+  }
+});
 
 // Ready
 $(document).ready(() => {
