@@ -1,19 +1,9 @@
-console.log("main.js!!");
-
-let counter = 0;
-let interid = -1;
-let snd1 = null;
-let snd2 = null;
-let snd3 = null;
-let snd4 = null;
-let snd5 = null;
 let soundicon = $("#soundicon");
 const controlArea = $("#controlarea");
 const controlWave = $("#musicwave");
 const stopImageSrc = "images/stopicon.png";
 const playImageSrc = "images/playicon.png";
 const playMusicWave = "images/musicwave.gif";
-let isMusicPlaying = false;
 let dropdownContent = $("#dropdownContent");
 
 const sounds = [
@@ -21,9 +11,14 @@ const sounds = [
   "./sounds/Mitsukiyo Unwelcome School.mp3",
   "./sounds/Mitsukiyo Romantic Smile.mp3",
   "./sounds/Mitsukiyo Lovely Picnic.mp3",
+  "./sounds/Mitsukiyo 09 Honey Jam.mp3",
+  "./sounds/Mitsukiyo Hifumi Daisuki.mp3",
+  "./sounds/Shooting Stars.mp3",
+  "./sounds/KARUT 03 Connected Sky.mp3",
+  "./sounds/Nor 09 Signal of Abydos.mp3",
   "./sounds/Nor Aoharu.mp3",
+  "./sounds/RE Aoharu.mp3",
 ];
-
 const howls = [];
 
 // Initialize Howl instances
@@ -36,69 +31,41 @@ for (let i = 0; i < sounds.length; i++) {
     onplay: function () {
       // ミュージック再生時に画像を変更
       $("#wallImage").attr("src", "images/hosino-unscreen.gif");
-      isMusicPlaying = true;
       controlWave.html(`<img src="${playMusicWave}" id="playMusicWave" />`);
       controlArea.html(`<img src="${stopImageSrc}" id="stopMusic" />`);
-      this.isPlaying = true; // 現在再生中のフラグを更新
-      // $("#musicwave").css("display", "initial");
       $("#musicwave").css("opacity", "1");
     },
     onpause: function () {
       // ミュージック一時停止時に画像を元に戻す
       $("#wallImage").attr("src", "images/blue archive.png");
-      isMusicPlaying = false;
       controlArea.html(`<img src="${playImageSrc}" id="playMusic" />`);
-      this.isPlaying = false; // 現在再生中のフラグを更新
-      // $("#musicwave").css("display", "none");
-      $("#musicwave").css("opacity", "0");
-    },
-    onstop: function () {
-      // ミュージック停止時に画像を元に戻す
-      $("#wallImage").attr("src", "images/blue archive.png");
-      isMusicPlaying = false;
-      controlArea.html(`<img src="${playImageSrc}" id="playMusic" />`); // ミュージック停止時に画像を削除
-      this.isPlaying = false; // 現在再生中のフラグを更新
-      // $("#musicwave").css("display", "none");
       $("#musicwave").css("opacity", "0");
     },
   });
 
   $(`#music${i + 1}`).click(() => {
-    // Check if the sound is already playing
-    if (!howls[i].playing()) {
-      // Stop all other sounds
-      for (let j = 0; j < howls.length; j++) {
-        if (j !== i && howls[j].playing()) {
-          howls[j].stop();
-        }
-      }
-      // Play the selected sound
-      howls[i].play();
+    //全てのオーディオを停止する
+    for (const howl of howls) {
+      howl.stop();
     }
+    //再生
+    playingIndex = i;
+    howls[i].play();
   });
 }
-controlArea.on("click", "#stopMusic", function () {
-  for (let i = 0; i < howls.length; i++) {
-    if (howls[i].playing()) {
-      howls[i].stop();
-    }
-  }
-});
-controlArea.on("click", "#playMusic", function () {
-  for (let i = 0; i < howls.length; i++) {
-    if (howls[i].playing()) {
-      howls[i].pause();
-    }
-  }
-});
 
 // Ready
 $(document).ready(() => {
   soundicon.on("mouseover", function () {
     dropdownContent.addClass("show");
   });
-
   dropdownContent.on("mouseleave", function () {
     dropdownContent.removeClass("show");
+  });
+  controlArea.on("click", "#stopMusic", function () {
+    howls[playingIndex].pause();
+  });
+  controlArea.on("click", "#playMusic", function () {
+    howls[playingIndex].play();
   });
 });
